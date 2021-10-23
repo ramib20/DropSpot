@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   },
   logo: {
       width: 305,
-      height: 89,
+      height: 275,
       marginTop: 50,
     },
     form: {
