@@ -1,0 +1,53 @@
+<script  type="text/javascript">
+  var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+function success(pos) {
+  var crd = pos.coords;
+
+  console.log('Your current position is:');
+  console.log(`Latitude : ${crd.latitude}`);
+  console.log(`Longitude: ${crd.longitude}`);
+  console.log(`More or less ${crd.accuracy} meters.`);
+
+  makeRequest(crd.latitude, crd.longitude, crd.accuracy)
+}
+
+function makeRequest(lat, long, acc){
+  //Create the document that returns the information
+  let locationElements = document.createElement("b");
+  document.body.appendChild(locationElements);
+  locationElements.innerHTML = lat + " " + long +
+    " " + acc;
+  console.log(locationElements);
+
+  var httpRequest = new XMLHttpRequest();
+
+  httpRequest.onreadystatechange = function() {
+    if(httpRequest.readyState == 4){
+      console.log(httpRequest.responseText);
+      console.log("Location Sent.")
+    }else{
+      console.log("There was an error with the request.");
+    }
+  }
+    httpRequest.open("POST", "https://hackgt21.colin4554.repl.co/location/", true);
+    httpRequest.send(lat + " " + long + " " + acc);
+}
+
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+function findLocation() {
+  navigator.geolocation.getCurrentPosition(success, error, options);
+}
+</script>
+
+<div>
+  <button onClick="findLocation()">Get Your Location</button>
+  <App>
+</div>
