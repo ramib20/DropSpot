@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
-import { Image, Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, Button, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import logo from './assets/logo.png';
 import * as ImagePicker from 'expo-image-picker';
 import * as Sharing from 'expo-sharing';
@@ -23,16 +23,15 @@ function HomeScreen({ navigation }) {
 
 function FormScreen({ navigation }) {
 
-    const [deliveryType, setDeliveryType] = React.useState(null);
+    const [text, onChangeText] = React.useState(null);
+    const [number, onChangeNumber] = React.useState(null);
     const [selectedImage, setSelectedImage] = React.useState(null);
         let openImagePickerAsync = async () => {
             let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
         if (permissionResult.granted === false) {
           alert("Permission to access camera roll is required!");
           return;
         }
-
         let pickerResult = await ImagePicker.launchImageLibraryAsync();
         if (pickerResult.cancelled === true) {
               return;
@@ -60,20 +59,25 @@ function FormScreen({ navigation }) {
       <View>
           <Text style={styles.instructions} > Delivery Details: </Text>
           <View>
-            <TextInput style={styles.textFields}
-              placeholder="Recipient's Phone Number" />
-            <TextInput style={styles.textFields}
-              placeholder="Additional Delivery Information"
-            />
+            <SafeAreaView>
+
+             <TextInput
+                    style={styles.input}
+                    onChangeText={onChangeNumber}
+                    value={number}
+                    placeholder="Phone Number"
+                    keyboardType="numeric"
+                  />
+                  <TextInput
+                                      style={styles.input}
+                                      onChangeText={onChangeText}
+                                      value={text}
+                                      placeholder="Delivery Info"
+                                    />
+                </SafeAreaView>
             <Text > </Text>
             <Text style={styles.instructions} > Delivery Type: </Text>
-            <Picker
-              selectedValue={deliveryType}
-              onValueChange={currentDeliveryType => setDeliveryType(currentDeliveryType)}>
-              <Picker.Item label="Drop-off" value = "Drop-off"/>
-              <Picker.Item label="Handed Directly to Recipient" value="Handed Directly to Recipient"/>
-              <Picker.Item label="Temp 3rd value" value = "Temp 3rd value"/>
-            </Picker>
+
           </View>
 
           <Text style={styles.instructions} >
