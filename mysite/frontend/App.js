@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { Image, Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import logo from './assets/splash.png';
+import logo from './assets/logo.png';
 import * as ImagePicker from 'expo-image-picker';
 import * as Sharing from 'expo-sharing';
 import { Picker } from '@react-native-picker/picker';
